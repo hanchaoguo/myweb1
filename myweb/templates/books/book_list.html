@@ -258,6 +258,39 @@ $("#submit_button1").click(function(){
 
 
 
+/*装机*/
+$("#submit_button2").click(function(){
+  var Sn= $('#Sn1').val()
+    var Hostname= $('#Hostname1').val()
+    var OsVersion= $('#OsVersion1').val()
+    var Ip= $('#Ip1').val()
+    var Netmask= $('#Netmask1').val()
+    var GW= $('#GW1').val()
+    var Mac= $('#Mac1').val()
+    var iLoIp= $('#iLoIp1').val()
+    var iLoNetmask= $('#iLoNetmask1').val()
+    var iLoGW= $('#iLoGW1').val()
+    var iLoMac= $('#iLoMac1').val()
+    $.ajax({
+            url:"{% url 'aoc' %}",
+            type: "post",
+            dataType:"json",
+            data:{Sn:Sn,Hostname:Hostname,OsVersion:OsVersion,Ip:Ip,Netmask:Netmask,GW:GW,Mac:Mac,iLoIp:iLoIp,iLoNetmask:iLoNetmask,iLoGW:iLoGW,iLoMac:iLoMac},
+            success: function(res){
+                if (res.code == 0) {
+{#                    location.reload()#}
+
+                }else{
+                    console.log(res)
+                }
+            },
+
+    })
+
+})
+
+
+
 /*删除*/
 $(".delete_button").on('click',function(){
     id = $(this).attr('objid')

@@ -22,6 +22,6 @@ from myweb.views import CmdbView,AOC
 urlpatterns = [
     path('admin/', admin.site.urls),
     url('^$', CmdbView.as_view(), name='cmdb'),
-    url('^aoc/',AOC)
+    url('^aoc/',AOC,name='aoc')
 
 ]

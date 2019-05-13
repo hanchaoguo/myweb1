@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Licience管理{% endblock %}
+{% block title %}资产信息{% endblock %}
 
 
 {% block breadcrunb %}
@@ -10,7 +10,7 @@
   </h1>
   <ol class="breadcrumb">
     <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active">Licience列表</li>
+    <li class="active">资产列表</li>
   </ol>
 {% endblock %}
 
@@ -24,6 +24,8 @@
 <div class="col-md-12">
 
 {% include "bookaddmodel.html" %}
+{% include "bookinfomodel.html" %}
+{% include "zjinfomodel.html" %}
 
 
 <!-- TABLE: LATEST ORDERS -->
@@ -31,7 +33,7 @@
 
 
     <div class="box-header with-border">
-      <h3 class="box-title">Licience列表</h3>
+      <h3 class="box-title">资产列表</h3>
       <div class="box-tools pull-right">
         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
         </button>
@@ -43,10 +45,10 @@
     <div class="box-body">
 
      <div style="margin-bottom: 10px;height: 30px" class="row">
-       <a style="float: left; margin-left: 1%" class="btn btn-sm btn-primary" id = "addbtn"> 添加Licience </a>
+       <a style="float: left; margin-left: 1%" class="btn btn-sm btn-primary" id = "addbtn"> 添加资产 </a>
         <form style="float: right;width: 20%;margin-right: 1%">
         <div  class="input-group">
-            <input type="text" class="form-control" name="keyword"
+            <input type="text" class="form-control" name1="keyword"
                  placeholder="产品名称|licience|账号|商机ID" value="{% if keyword %} {{ keyword }} {% endif %}">
             <div class="input-group-btn">
                <button id='search_btn' type="submit" class="btn btn-sm btn-primary">搜索</button>
@@ -60,35 +62,55 @@
     <table class="table table-bordered table-striped footable toggle-arrow-tiny" data-page-navigation=".paginations">
         <thead>
 	  <tr>
-	      <th>产品名称</th>
-	      <th>licience类别</th>
-	      <th>账号</th>
-	      <th>网神账号</th>
-	      <th>商机ID</th>
-	      <th>申请单编号</th>
-	      <th>dog SN</th>
-	      <th>设备SN</th>
-	      <th>设备信息</th>
-	      <th>资源ID</th>
-	      <th>激活时间</th>
-	      <th>失效时间</th>
-	      <th>操作</th>
+	      <th>SN</th>
+	      <th>主机名</th>
+	      <th>操作系统版本</th>
+	      <th>子网掩码</th>
+	      <th>网关</th>
+	      <th>mac地址</th>
+          <th>带外ip</th>
+          <th>带外子网掩码</th>
+          <th>带外网关</th>
+          <th>带外网关</th>
+	      <th>带外mac</th>
+          <th>操作</th>
 	  </tr>
 	  </thead>
 	  <tbody>
-	    {% for book in book_list %}
+	    {% for cmdb in cmdb_list %}
 		<tr>
-		    <!--td> <a href="{% url 'books:book_detail'  book.id %}">{{ book.name }}</a> </td-->
-		    <!--td>
-			{% for author in book.authors.all %}
-			 {{ author.name }},
-			{% endfor %}
-		    </td-->
-		    <td> {{ book.ProductName }}</td>
-		    <td> {{ book.LicienceClass }}</td>
-		    <td>
-			<a type="button" class="btn btn-info btn-xs"  href="{% url 'books:book_detail'  book.id %}" >修改</a>
-		    </td>
+		    <td> <a type="button" class="bianji btn btn-link btn-xs"  >{{ cmdb.Sn }}</a></td>
+		    <td> {{ cmdb.Hostname }}</td>
+		    <td> {{ cmdb.OsVersion }}</td>
+		    <td> {{ cmdb.Ip }}</td>
+		    <td> {{ cmdb.Netmask }}</td>
+		    <td> {{ cmdb.GW }}
+            <td> {{ cmdb.Mac }}</td>
+            <td> {{ cmdb.iLoIp }}</td>
+            <td> {{ cmdb.iLoNetmask }}</td>
+            <td> {{ cmdb.iLoGW }}</td>
+            <td> {{ cmdb.iLoMac }}</td>
+                    <td>
+                        <!--a type="button" class="bianji btn btn-info btn-xs"  >编辑</a>
+                        <a type="button" class="delete_button btn btn-danger btn-xs" objid={{book.id}} href="{#% url 'books:publish_detail'  publish.id %#}" >删除</a-->
+                     <div class="dropdown">
+  <button class="btn btn-info btn-xs dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    发单
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+    <li><a type="button" class="zhuangji btn btn-link btn-xs ">装机</a></li>
+    <li><a href="#">更改主机名</a></li>
+    <li><a href="#">重置密码</a></li>
+  </ul>
+</div>
+                        <!--button class="btn btn-info dropdown-toggle bianji" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      编辑
+   </button-->
+                        <button class="delete_button btn btn-danger btn-xs" type="button" objid={{cmdb.Sn}} data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      删除
+   </button>
+                    </td>
 		</tr>
 	    {% endfor %}
 	  </tbody>
@@ -133,33 +155,143 @@ $('.datepicker').datepicker({
 });
 
 
+
+
+
+
 /*添加模态窗弹出*/
 $("#addbtn").click(function(){
     $("#book_add_modal").modal("show");
 });
 
-/*添加出版商*/
-$("#submit_button").click(function(){
-    var formdata = $('#AddForm').serialize()
-    console.log(formdata)
-    $.post('', formdata, function(res){
-        console.log(res)
-        if (res.code == 0) {
-            swal({
-                "title": "添加成功",
-                 "text": res.result,
-                 "type": "success"
-            }, function () {
-                 setTimeout(function () {
-                    window.location.reload();
-                 }, 50);
-             })
-        } else {
-            swal("操作失败", res.errmsg, "error");
-         }
+/*编辑模态窗弹出*/
+$(".bianji").click(function(){
+    $("#book_info_modal").modal("show");
+{#    Sn = $(this).attr('objid')#}
+
+    Sn = $.trim($(this).parents('tr').children('td').eq(0).text())
+    Hostname = $.trim($(this).parents('tr').children('td').eq(1).text())
+    OsVersion = $.trim($(this).parents('tr').children('td').eq(2).text())
+    Ip = $.trim($(this).parents('tr').children('td').eq(3).text())
+    Netmask = $.trim($(this).parents('tr').children('td').eq(4).text())
+    GW = $.trim($(this).parents('tr').children('td').eq(5).text())
+    Mac = $.trim($(this).parents('tr').children('td').eq(6).text())
+    iLoIp = $.trim($(this).parents('tr').children('td').eq(7).text())
+    iLoNetmask = $.trim($(this).parents('tr').children('td').eq(8).text())
+    iLoGW = $.trim($(this).parents('tr').children('td').eq(9).text())
+    iLoMac = $.trim($(this).parents('tr').children('td').eq(10).text())
+    $('#Sn').attr('value',Sn)
+    $('#Hostname').attr('value',Hostname)
+    $('#OsVersion').attr('value',OsVersion)
+    $('#Ip').attr('value',Ip)
+    $('#Netmask').attr('value',Netmask)
+    $('#GW').attr('value',GW)
+    $('#Mac').attr('value',Mac)
+    $('#iLoIp').attr('value',iLoIp)
+    $('#iLoNetmask').attr('value',iLoNetmask)
+    $('#iLoGW').attr('value',iLoGW)
+    $('#iLoMac').attr('value',iLoMac)
+});
+
+
+/*编辑模态窗弹出*/
+$(".zhuangji").click(function(){
+    $("#zj_info_modal").modal("show");
+{#    Sn = $(this).attr('objid')#}
+
+    Sn = $.trim($(this).parents('tr').children('td').eq(0).text())
+    Hostname = $.trim($(this).parents('tr').children('td').eq(1).text())
+    OsVersion = $.trim($(this).parents('tr').children('td').eq(2).text())
+    Ip = $.trim($(this).parents('tr').children('td').eq(3).text())
+    Netmask = $.trim($(this).parents('tr').children('td').eq(4).text())
+    GW = $.trim($(this).parents('tr').children('td').eq(5).text())
+    Mac = $.trim($(this).parents('tr').children('td').eq(6).text())
+    iLoIp = $.trim($(this).parents('tr').children('td').eq(7).text())
+    iLoNetmask = $.trim($(this).parents('tr').children('td').eq(8).text())
+    iLoGW = $.trim($(this).parents('tr').children('td').eq(9).text())
+    iLoMac = $.trim($(this).parents('tr').children('td').eq(10).text())
+    $('#Sn1').attr('value',Sn)
+    $('#Hostname1').attr('value',Hostname)
+    $('#OsVersion1').attr('value',OsVersion)
+    $('#Ip1').attr('value',Ip)
+    $('#Netmask1').attr('value',Netmask)
+    $('#GW1').attr('value',GW)
+    $('#Mac1').attr('value',Mac)
+    $('#iLoIp1').attr('value',iLoIp)
+    $('#iLoNetmask1').attr('value',iLoNetmask)
+    $('#iLoGW1').attr('value',iLoGW)
+    $('#iLoMac1').attr('value',iLoMac)
+});
+
+
+
+/*更新*/
+$("#submit_button1").click(function(){
+  var Sn= $('#Sn').val()
+    var Hostname= $('#Hostname').val()
+    var OsVersion= $('#OsVersion').val()
+    var Ip= $('#Ip').val()
+    var Netmask= $('#Netmask').val()
+    var GW= $('#GW').val()
+    var Mac= $('#Mac').val()
+    var iLoIp= $('#iLoIp').val()
+    var iLoNetmask= $('#iLoNetmask').val()
+    var iLoGW= $('#iLoGW').val()
+    var iLoMac= $('#iLoMac').val()
+    $.ajax({
+            url:"{% url 'cmdb' %}",
+            type: "put",
+            dataType:"json",
+            data:{Sn:Sn,Hostname:Hostname,OsVersion:OsVersion,Ip:Ip,Netmask:Netmask,GW:GW,Mac:Mac,iLoIp:iLoIp,iLoNetmask:iLoNetmask,iLoGW:iLoGW,iLoMac:iLoMac},
+            success: function(res){
+                if (res.code == 0) {
+{#                    location.reload()#}
+
+                }else{
+                    console.log(res)
+                }
+            },
+
     })
-    return false;
+
 })
+
+
+
+/*删除*/
+$(".delete_button").on('click',function(){
+    id = $(this).attr('objid')
+    console.log(id)
+    if(confirm("是否确认删除？")){
+        $.ajax({
+            url:"{% url 'cmdb' %}",
+            type: "DELETE",
+            dataType:"json",
+            data:{id:id},
+            success: function(res){
+            console.log(res)
+            if (res.code == 0) {
+                    swal({
+                         "title": "删除",
+                         "text": res.result,
+                         "type": "success"
+                    }, function () {
+                         setTimeout(function () {
+                           window.location.href="{#% url 'books:publish_list' %#}";
+                         }, 50);
+                     })
+                }else{
+                        swal("操作失败", res.errmsg, "error")
+                     }
+           }
+        })
+
+    }  // end confirm
+     return false
+})
+
+
+
 
 
 {% endblock %}
