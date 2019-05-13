@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import View, ListView
 from django.http import JsonResponse, QueryDict
-from .models import Cmdb
+from .models import Cmdb,Task
 from .forms import CmdbForm
 import json
 import re
@@ -61,6 +61,27 @@ class CmdbView(ListView):
         return JsonResponse(res)
 
 
+class Task(ListView):
+    """
+    task列表
+    """
+    model =Task
+    template_name = 'books/publish_list.html'
+    context_object_name = 'task_list'
+    paginate_by = 10    
+
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(Task, self).get_context_data(**kwargs)
+        return context
+
+    def get_queryset(self):
+        queryset = self.model.objects.all()
+        return queryset
+
+
+
+
 def AOC(request):
     if request.method=='GET':
          #print (request)
@@ -70,10 +91,12 @@ def AOC(request):
          return JsonResponse(a)
 
     if request.method=="POST":
-         data = (request.POST['data'])
-         d=re.sub("u'","\"",data)
-         d=re.sub("'","\"",d)
-         data1 = json.loads(d,encoding='utf-8')
+         print (request.POST)
+         print (request.POST.get("ilo_info"))
+         #data = (request.POST['data'])
+         #d=re.sub("u'","\"",data)
+         #d=re.sub("'","\"",d)
+         #data1 = json.loads(d,encoding='utf-8')
 
 
 
