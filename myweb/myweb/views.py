@@ -85,26 +85,22 @@ class Task(ListView):
         return queryset
 
 
-class AOC(View):
+class AOC(object):
 
-    def post(self,request):
-        print(request.POST)
-        return JsonResponse({"res":True})
+    def aoc(request):
+        if request.method == 'GET':
+            # print (request)
+            a = {'a': 1}
+            print(a)
+            # return restful.result(code=restful.Httpcode.paramserror,message="aa")
+            return JsonResponse(a)
 
-    # def aoc(request):
-    #     if request.method == 'GET':
-    #         # print (request)
-    #         a = {'a': 1}
-    #         print(a)
-    #         # return restful.result(code=restful.Httpcode.paramserror,message="aa")
-    #         return JsonResponse(a)
-    #
-    #     if request.method == "POST":
-    #         # print (request.POST)
-    #         data = QueryDict(request.body).dict()['aa']
-    #         # d=re.sub("u'","\"",data)
-    #         # d=re.sub("'","\"",d)
-    #         # data1 = json.loads(d,encoding='utf-8')
-    #
-    #         a = {"v": 1}
-    #         return JsonResponse(a)
+        if request.method == "POST":
+            # print (request.POST)
+            data = QueryDict(request.body).dict()['aa']
+            # d=re.sub("u'","\"",data)
+            # d=re.sub("'","\"",d)
+            # data1 = json.loads(d,encoding='utf-8')
+
+            a = {"v": 1}
+            return JsonResponse(a)
