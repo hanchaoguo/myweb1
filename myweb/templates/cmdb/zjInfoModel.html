@@ -1,0 +1,206 @@
+<!-- 编辑Lcience信息-->
+<div class="modal fade" id='zj_info_modal'>
+  <div class="modal-dialog" style="width:1000px">
+    <div class="modal-content">
+
+        <div class="modal-header" style="background:cornflowerblue; color:white">
+         <i class="fa fa-info-circle"></i>
+         <span style="font-weight:bold">安装操作系统</span>
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+
+        <div class="modal-body" style="text-align:center">
+           <form class="form-horizontal row" id = "AddForm1" name="AddForm">
+                  <div class="form-group col-sm-4">
+                      <label  class="col-sm-4 control-label"><span style="color:red; margin-right:10px">*</span>sn</label>
+                      <div class="col-sm-8">
+                          <input id="Sn1" name="Sn" type="text" disabled style="border:none;background:#fff" class="form-control" placeholder="sn"/>
+                      </div>
+                  </div>
+                  
+                  <div class="form-group col-sm-4">
+                      <label  class="col-sm-4 control-label"><span style="color:red; margin-right:10px">*</span>主机名</label>
+                      <div class="col-sm-8">
+                          <input id="Hostname1" name="Hostname" disabled style="border:none;background:#fff" type="text" class="form-control" placeholder="主机名"/>
+                      </div>
+                  </div>
+                 
+                                    
+                  <div class="form-group col-sm-4">
+                      <label  class="col-sm-4 control-label"><span style="color:red; margin-right:10px">*</span>操作系统版本</label>
+                      <div class="col-sm-8">
+                          <input name="OsVersion" id="OsVersion1" type="text" disabled style="border:none;background:#fff" class="form-control" placeholder="操作系统版本"/>
+                      </div>
+                  </div>
+
+                   
+                  <div class="form-group col-sm-4">
+                      <label  class="col-sm-4 control-label"><span style="color:red; margin-right:10px">*</span>ip</label>
+                      <div class="col-sm-8">
+                          <input name="Ip" id="Ip1" type="text" disabled style="border:none;background:#fff" class="form-control" placeholder="ip"/>
+                      </div>
+                  </div>
+
+                   
+                  <div class="form-group col-sm-4">
+                      <label  class="col-sm-4 control-label"><span style="color:red; margin-right:10px">*</span>子网掩码</label>
+                      <div class="col-sm-8">
+                          <input name="Netmask" id="Netmask1" type="text" disabled style="border:none;background:#fff" class="form-control" placeholder="子网掩码"/>
+                      </div>
+                  </div>
+
+                                    
+                  <div class="form-group col-sm-4">
+                      <label  class="col-sm-4 control-label"><span style="color:red; margin-right:10px">*</span>网关</label>
+                      <div class="col-sm-8">
+                          <input name="GW" id="GW1"  type="text" disabled style="border:none;background:#fff" class="form-control" placeholder="网关"/>
+                      </div>
+                  </div>
+
+                                    
+                  <div class="form-group col-sm-4">
+                      <label  class="col-sm-4 control-label"><span style="color:red; margin-right:10px">*</span>mac地址</label>
+                      <div class="col-sm-8">
+                          <input name="Mac" id="Mac1" type="text" disabled style="border:none;background:#fff" class="form-control" placeholder="mac地址"/>
+                      </div>
+                  </div>
+
+                  
+                  <div class="form-group col-sm-4">
+                      <label  class="col-sm-4 control-label"><span style="color:red; margin-right:10px">*</span>带外ip</label>
+                      <div class="col-sm-8">
+                          <input name="iLoIp" id="iLoIp1" disabled style="border:none;background:#fff" type="text" class="form-control" placeholder="带外ip"/>
+                      </div>
+                  </div>
+                   
+                  
+                  <div class="form-group col-sm-4">
+                      <label  class="col-sm-4 control-label"><span style="color:red; margin-right:10px">*</span>带外子网掩码</label>
+                      <div class="col-sm-8">
+                          <input name="iLoNetmask" id="iLoNetmask1" type="text" disabled style="border:none;background:#fff" class="form-control" placeholder="带外子网掩码"/>
+                      </div>
+                  </div>
+
+                <div class="form-group col-sm-4">
+                      <label  class="col-sm-4 control-label"><span style="color:red; margin-right:10px">*</span>带外网关</label>
+                      <div class="col-sm-8">
+                          <input name="iLoGW"  id="iLoGW1" type="text" disabled style="border:none;background:#fff" class="form-control" placeholder="带外网关"/>
+                      </div>
+                  </div>
+
+                <div class="form-group col-sm-4">
+                      <label  class="col-sm-4 control-label"><span style="color:red; margin-right:10px">*</span>带外mac</label>
+                      <div class="col-sm-8">
+                          <input name="iLoMac" id="iLoMac1" disabled style="border:none;background:#fff" type="text" class="form-control" placeholder="带外mac"/>
+                      </div>
+                  </div>
+
+<ul class="nav nav-list"><li class="divider">aa</li></ul>
+
+                   
+                      <div class="form-group col-sm-4">
+                      <span class="input-group-addon col-xs-3">操作系统</span>
+        <select class="form-control" id="install_os" type="select">
+                <option value="centos6.5">Centos6.5</option>
+                <option value="centos7.3">Centos7.3</option>
+                <option value="centos7.5">Centos7.5</option>
+                <option value="centos6.3">Centos6.3</option>
+                <option value="ubuntu16.04">Ubuntu16.04</option>
+                <option value="centos6.5-xgw">Centos6.5-XGW</option>
+                <option value="centos7.2">Centos7.2</option>
+                <option value="centos6.3-rds">Centos6.3-RDS</option>
+        </select>
+</div>
+
+
+
+<div class="col-xs-6" data-tag-sign="install_raid_root">
+    <div class="input-group query-row">
+    <span class="input-group-addon col-xs-3">系统盘RAID</span>
+        <select class="form-control" id="install_raid_root" type="select">
+                <option value="RAID1">RAID1</option>
+                <option value="EMPTY">无</option>
+                <option value="RAID0">RAID0</option>
+                <option value="RAID00">RAID00</option>
+                <option value="RAID10">RAID10</option>
+                <option value="RAID5">RAID5</option>
+                <option value="RAID50">RAID50</option>
+                <option value="KVM_RAID1">KVM_RAID1</option>
+        </select>
+    </div>
+</div>
+
+
+
+
+
+<div class="col-xs-6" data-tag-sign="install_raid_data">
+    <div class="input-group query-row">
+    <span class="input-group-addon col-xs-3">数据盘RAID</span>
+        <select class="form-control" id="install_raid_data" type="select">
+                <option value="EMPTY">无</option>
+                <option value="RAID0">RAID0</option>
+                <option value="RAID1">RAID1</option>
+                <option value="RAID00">RAID00</option>
+                <option value="RAID10">RAID10</option>
+                <option value="RAID5">RAID5</option>
+                <option value="RAID50">RAID50</option>
+                <option value="KVM_RAIDS0">KVM_RAIDS0</option>
+        </select>
+    </div>
+</div>
+
+
+
+<div class="col-xs-6" data-tag-sign="install_bond">
+    <div class="input-group query-row">
+    <span class="input-group-addon col-xs-3">BOND</span>
+        <select class="form-control" id="install_bond" type="select">
+                <option value="yes">是</option>
+                <option value="no">否</option>
+        </select>
+    </div>
+</div>
+
+
+<div class="col-xs-6" data-tag-sign="install_root_size">
+    <div class="input-group query-row">
+    <span class="input-group-addon col-xs-3">根分区大小</span>
+        <select class="form-control" id="install_root_size" type="select">
+                <option value="100G">100G</option>
+                <option value="all">all</option>
+                <option value="22G">22G</option>
+                <option value="44G">44G</option>
+                <option value="300G">300G</option>
+                <option value="600G">600G</option>
+        </select>
+    </div>
+</div>
+
+<div class="col-xs-6" data-tag-sign="install_bond_opts">
+    <div class="input-group query-row">
+    <span class="input-group-addon col-xs-3">BOND参数</span>
+        <select class="form-control" id="install_bond_opts" type="select">
+                <option value="mode4_34">mode4(3+4)</option>
+                <option value="mode4_23">mode4(2+3)</option>
+        </select>
+    </div>
+</div>
+
+
+
+
+
+
+		<div class="modal-footer">
+		    <button class="btn btn-default modalbtn" data-dismiss="modal">关闭</button>
+		    <button class="btn btn-primary" id="submit_button2">确定</button>
+		</div>
+           
+         </form>
+        </div>
+
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
