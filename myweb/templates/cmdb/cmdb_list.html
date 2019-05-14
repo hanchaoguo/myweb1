@@ -299,8 +299,8 @@ $("#submit_button2").click(function(){
     var install_bond = $('#install_bond').val()
     var install_root_size =$('#install_root_size').val()
     var install_bond_opts = $('#install_bond_opts').val()
-    var params ="aa={\"Sn:\""+Sn+",\"Hostname\":"+Hostname+",\"OsVersion\":"+OsVersion+",\"Ip\":"+Ip+",\"Netmask\":"+Netmask+",\"GW\":"+GW+",\"Mac\":"+Mac+",\"ilo_info\":{\"ipaddr\":"+iLoIp+",\"netmask\":"+iLoNetmask+",\"gw\":"+iLoGW+",\"mac_addr\":"+iLoMac+"},\"install_os\":"+install_os+"}";
-
+    var params ="aa={\"raid\":{\"media_type\":"+install_raid_data+",\"raid_level\":"+install_raid_root+"},\"sn:\""+Sn+",\"hostname\":"+Hostname+",\"OsVersion\":"+OsVersion+",\"inf0\":{\"Ip\":"+Ip+",\"Netmask\":"+Netmask
++",\"GW\":"+GW+",\"Mac\":"+Mac+"},\"ilo_info\":{\"ipaddr\":"+iLoIp+",\"netmask\":"+iLoNetmask+",\"gw\":"+iLoGW+",\"mac_addr\":"+iLoMac+"},\"install_os\":"+install_os+",\'rootsize\":"+install_root_size+"}";
 
 
     $.ajax({

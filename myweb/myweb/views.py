@@ -30,10 +30,13 @@ class CmdbView(ListView):
 
     def post(self, request):
         form = CmdbForm(request.POST)
+        print (form)
         if form.is_valid():
+            print ("suecess")
             form.save()
             res = {'code': 0, 'result': "添加资产成功"}
         else:
+            print ("error")
             res = {'code': 0, 'result': form.errors}
         return JsonResponse(res, safe=True)
 
@@ -81,7 +84,10 @@ class Task(ListView):
 
 
 
-def AOC(request):
+class AOC(object):
+
+
+ def aoc(request):
     if request.method=='GET':
          #print (request)
          a = {'a':1}
@@ -90,9 +96,8 @@ def AOC(request):
          return JsonResponse(a)
 
     if request.method=="POST":
-         print (request.POST)
-         print (request.POST.get("ilo_info"))
-         #data = (request.POST['data'])
+         #print (request.POST)
+         data = QueryDict(request.body).dict()['aa']
          #d=re.sub("u'","\"",data)
          #d=re.sub("'","\"",d)
          #data1 = json.loads(d,encoding='utf-8')
