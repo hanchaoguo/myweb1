@@ -16,7 +16,7 @@ class CmdbView(ListView):
     cmdb列表
     """
     model = Cmdb
-    template_name = 'books/book_list.html'
+    template_name = 'cmdb/cmdb_list.html'
     context_object_name = 'cmdb_list'
     paginate_by = 10
 
@@ -30,7 +30,6 @@ class CmdbView(ListView):
 
     def post(self, request):
         form = CmdbForm(request.POST)
-        print (form)
         if form.is_valid():
             form.save()
             res = {'code': 0, 'result': "添加资产成功"}
