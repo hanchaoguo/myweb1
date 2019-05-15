@@ -87,20 +87,55 @@ class Task(ListView):
         return queryset
 
     def create_task(self, data):
+        """
+        创建task
+        :param data:{'operation_type': 'install', 'id': '4', 'raid': {'media_type': 'EMPTY', 'raid_level': 'RAID1'}, 'sn': '333', 'hostname': '333', 'OsVersion': '33', 'ethernet': {'inf0': {'Ip': '333', 'Netmask': '33', 'GW': '333', 'Mac': '333'}, 'ilo_info': {'ipaddr': '333', 'netmask': '333', 'gw': '333', 'mac_addr': '333'}, 'install_os': 'centos6.5', 'rootsize': '100G'}}
+        :return: {'code': 0, 'result': {data:{id:1}}}
+        """
         res = {'code': 1, 'result': ""}
         if not data:
             res['error'] = "参数错误"
             return res
-        print(data)
-
-
-        pass
+        task_data = {}
+        task_data["Cmdb_id"] = data.get("id", '')
+        task_data["TaskID"] = data.get("sn", '')
+        task_data["Taskname"] = data.get("operation_type", '')
+        task_data["Taksstatus"] = 0
+        try:
+            obj = self.model.objects.create(**task_data)
+            res['code'] = 0
+            res["result"] = {"data": {"id": obj.id}}
+            return res
+        except Exception as e:
+            res['error'] = e
+            return res
 
     def update_task(self, data):
-        pass
+        """
+        更新task状态
+        :param data: {id:"1",Taksstatus:"xxxx"}
+        :return: {'code': 0, 'result': "更新成功"}
+        """
+        res = {'code': 1, 'result': "", 'error': '参数错误'}
+        if not data:
+            return res
+        id = data.get('id', "")
+        if not id:
+            return res
+        Taksstatus = data.get("Taksstatus", "")
+        try:
+            self.model.objects.filter(id=id).update({"Taksstatus": Taksstatus})
+            res['code'] = 0
+            res["result"] = "更新状态成功"
+            res.pop("error")
+            return res
+        except Exception as e:
+            res["error"] = str(e)
+            return res
+
+        # logger = Logger.Logger().getlog()
 
 
-# logger = Logger.Logger().getlog()
 def AOC(request):
     if request.method == 'GET':
         # print (request)
@@ -110,13 +145,16 @@ def AOC(request):
         return JsonResponse(a)
 
     if request.method == "POST":
-        # print (request.POST)
         data = QueryDict(request.body).dict()['aa']
-        # print(data)
-        # print (data)
         data = json.loads(data)
-        # print (data)
-        Task().create_task(data)
+        # task入库，返回id
+        result = Task().create_task(data)
+        if result.get("code", "") != 0:
+            print("入库失败")
+            return
+        id = result["result"]["data"]["id"]
+        print("id==>", id)
+        # 更加id执行，然后更新任务状态，及创建任务详细信息
 
         r = data['operation_type']
         if r == "install":
