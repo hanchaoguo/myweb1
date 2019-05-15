@@ -69,14 +69,14 @@ class CmdbView(PaginationMixin, ListView):
         return JsonResponse(res)
 
 
-class Task(ListView):
+class Task(PaginationMixin, ListView):
     """
     task列表
     """
     model = Task
     template_name = 'task/task_list.html'
     context_object_name = 'task_list'
-    paginate_by = 10
+    paginate_by = 2
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(Task, self).get_context_data(**kwargs)
@@ -134,6 +134,16 @@ class Task(ListView):
             return res
 
         # logger = Logger.Logger().getlog()
+
+    def delete(self, request, *args, **kwargs):
+        webdata = QueryDict(request.body).dict()
+        pk = webdata.get("id")
+        try:
+            self.model.objects.filter(id=pk).delete()
+            res = {"code": 0, "result": "删除任务成功"}
+        except:
+            res = {"code": 1, "errmsg": "删除错误请联系管理员"}
+        return JsonResponse(res, safe=True)
 
 
 def AOC(request):

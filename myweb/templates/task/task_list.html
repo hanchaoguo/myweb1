@@ -82,7 +82,8 @@
 			<a type="button" class="btn btn-info btn-xs"  href="#" >查看</a>
 		    </td>
 		    <td>
-			<a type="button" class="btn btn-info btn-xs"  href="#" >删除</a>
+			<a type="button" class="btn btn-info btn-xs"  href="#" >重装</a>
+                 <button class="delete_button btn btn-danger btn-xs" type="button" objid={{task.id}} data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">删除</button>
 		    </td>
 		</tr>
 	    {% endfor %}
@@ -141,6 +142,38 @@ $("#submit_button").click(function(){
          }
     })
     return false;
+})
+
+/*删除*/
+$(".delete_button").on('click',function(){
+    id = $(this).attr('objid')
+    console.log(id)
+    if(confirm("是否确认删除？")){
+        $.ajax({
+            url:"{% url 'task' %}",
+            type: "DELETE",
+            dataType:"json",
+            data:{id:id},
+            success: function(res){
+            console.log(res)
+            if (res.code == 0) {
+                    swal({
+                         "title": "删除",
+                         "text": res.result,
+                         "type": "success"
+                    }, function () {
+                         setTimeout(function () {
+                           window.location.href="{#% url 'books:publish_list' %#}";
+                         }, 50);
+                     })
+                }else{
+                        swal("操作失败", res.errmsg, "error")
+                     }
+           }
+        })
+
+    }  // end confirm
+     return false
 })
 
 
