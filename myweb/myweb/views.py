@@ -83,7 +83,7 @@ class Task(PaginationMixin, ListView):
         return context
 
     def get_queryset(self):
-        queryset = self.model.objects.all()
+        queryset = self.model.objects.all().order_by("-id")
         return queryset
 
     def create_task(self, data):
