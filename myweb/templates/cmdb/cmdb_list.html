@@ -61,7 +61,7 @@
     <div class="table-responsive">
     <table class="table table-bordered table-striped footable toggle-arrow-tiny" data-page-navigation=".paginations">
         <thead>
-	  <tr>
+	  <tr><th>ID</th>
 	      <th>SN</th>
 	      <th>主机名</th>
 	      <th>操作系统版本</th>
@@ -78,7 +78,7 @@
 	  </thead>
 	  <tbody>
 	    {% for cmdb in cmdb_list %}
-		<tr>
+		<tr><td> {{ cmdb.id }}</td>
 		    <td> <a type="button" class="bianji btn btn-link btn-xs"  >{{ cmdb.Sn }}</a></td>
 		    <td> {{ cmdb.Hostname }}</td>
 		    <td> {{ cmdb.OsVersion }}</td>
@@ -107,7 +107,7 @@
                         <!--button class="btn btn-info dropdown-toggle bianji" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
       编辑
    </button-->
-                        <button class="delete_button btn btn-danger btn-xs" type="button" objid={{cmdb.Sn}} data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <button class="delete_button btn btn-danger btn-xs" type="button" objid={{cmdb.id}} data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
       删除
    </button>
                     </td>
@@ -191,18 +191,19 @@ $("#submit_button").click(function(){
 $(".bianji").click(function(){
     $("#book_info_modal").modal("show");
 {#    Sn = $(this).attr('objid')#}
-
-    Sn = $.trim($(this).parents('tr').children('td').eq(0).text())
-    Hostname = $.trim($(this).parents('tr').children('td').eq(1).text())
-    OsVersion = $.trim($(this).parents('tr').children('td').eq(2).text())
-    Ip = $.trim($(this).parents('tr').children('td').eq(3).text())
-    Netmask = $.trim($(this).parents('tr').children('td').eq(4).text())
-    GW = $.trim($(this).parents('tr').children('td').eq(5).text())
-    Mac = $.trim($(this).parents('tr').children('td').eq(6).text())
-    iLoIp = $.trim($(this).parents('tr').children('td').eq(7).text())
-    iLoNetmask = $.trim($(this).parents('tr').children('td').eq(8).text())
-    iLoGW = $.trim($(this).parents('tr').children('td').eq(9).text())
-    iLoMac = $.trim($(this).parents('tr').children('td').eq(10).text())
+    Id = $.trim($(this).parents('tr').children('td').eq(0).text())
+    Sn = $.trim($(this).parents('tr').children('td').eq(1).text())
+    Hostname = $.trim($(this).parents('tr').children('td').eq(2).text())
+    OsVersion = $.trim($(this).parents('tr').children('td').eq(3).text())
+    Ip = $.trim($(this).parents('tr').children('td').eq(4).text())
+    Netmask = $.trim($(this).parents('tr').children('td').eq(5).text())
+    GW = $.trim($(this).parents('tr').children('td').eq(6).text())
+    Mac = $.trim($(this).parents('tr').children('td').eq(7).text())
+    iLoIp = $.trim($(this).parents('tr').children('td').eq(8).text())
+    iLoNetmask = $.trim($(this).parents('tr').children('td').eq(9).text())
+    iLoGW = $.trim($(this).parents('tr').children('td').eq(10).text())
+    iLoMac = $.trim($(this).parents('tr').children('td').eq(11).text())
+   $('#Id').attr('value',Id)
     $('#Sn').attr('value',Sn)
     $('#Hostname').attr('value',Hostname)
     $('#OsVersion').attr('value',OsVersion)
@@ -221,18 +222,19 @@ $(".bianji").click(function(){
 $(".zhuangji").click(function(){
     $("#zj_info_modal").modal("show");
 {#    Sn = $(this).attr('objid')#}
-
-    Sn = $.trim($(this).parents('tr').children('td').eq(0).text())
-    Hostname = $.trim($(this).parents('tr').children('td').eq(1).text())
-    OsVersion = $.trim($(this).parents('tr').children('td').eq(2).text())
-    Ip = $.trim($(this).parents('tr').children('td').eq(3).text())
-    Netmask = $.trim($(this).parents('tr').children('td').eq(4).text())
-    GW = $.trim($(this).parents('tr').children('td').eq(5).text())
-    Mac = $.trim($(this).parents('tr').children('td').eq(6).text())
-    iLoIp = $.trim($(this).parents('tr').children('td').eq(7).text())
-    iLoNetmask = $.trim($(this).parents('tr').children('td').eq(8).text())
-    iLoGW = $.trim($(this).parents('tr').children('td').eq(9).text())
-    iLoMac = $.trim($(this).parents('tr').children('td').eq(10).text())
+     Id = $.trim($(this).parents('tr').children('td').eq(0).text())
+    Sn = $.trim($(this).parents('tr').children('td').eq(1).text())
+    Hostname = $.trim($(this).parents('tr').children('td').eq(2).text())
+    OsVersion = $.trim($(this).parents('tr').children('td').eq(3).text())
+    Ip = $.trim($(this).parents('tr').children('td').eq(4).text())
+    Netmask = $.trim($(this).parents('tr').children('td').eq(5).text())
+    GW = $.trim($(this).parents('tr').children('td').eq(6).text())
+    Mac = $.trim($(this).parents('tr').children('td').eq(7).text())
+    iLoIp = $.trim($(this).parents('tr').children('td').eq(8).text())
+    iLoNetmask = $.trim($(this).parents('tr').children('td').eq(9).text())
+    iLoGW = $.trim($(this).parents('tr').children('td').eq(10).text())
+    iLoMac = $.trim($(this).parents('tr').children('td').eq(11).text())
+    $('#Id1').attr('value',Id)
     $('#Sn1').attr('value',Sn)
     $('#Hostname1').attr('value',Hostname)
     $('#OsVersion1').attr('value',OsVersion)
@@ -250,6 +252,7 @@ $(".zhuangji").click(function(){
 
 /*更新*/
 $("#submit_button1").click(function(){
+    var Id= $('#Id').val()
   var Sn= $('#Sn').val()
     var Hostname= $('#Hostname').val()
     var OsVersion= $('#OsVersion').val()
@@ -265,7 +268,7 @@ $("#submit_button1").click(function(){
             url:"{% url 'cmdb' %}",
             type: "put",
             dataType:"json",
-            data:{Sn:Sn,Hostname:Hostname,OsVersion:OsVersion,Ip:Ip,Netmask:Netmask,GW:GW,Mac:Mac,iLoIp:iLoIp,iLoNetmask:iLoNetmask,iLoGW:iLoGW,iLoMac:iLoMac},
+            data:{Id:Id,Sn:Sn,Hostname:Hostname,OsVersion:OsVersion,Ip:Ip,Netmask:Netmask,GW:GW,Mac:Mac,iLoIp:iLoIp,iLoNetmask:iLoNetmask,iLoGW:iLoGW,iLoMac:iLoMac},
             success: function(res){
                 if (res.code == 0) {
                     location.reload()
@@ -282,7 +285,8 @@ $("#submit_button1").click(function(){
 
 /*装机*/
 $("#submit_button2").click(function(){
-  var Sn= $('#Sn1').val()
+    var Id= $('#Id1').val()
+    var Sn= $('#Sn1').val()
     var Hostname= $('#Hostname1').val()
     var OsVersion= $('#OsVersion1').val()
     var Ip= $('#Ip1').val()
@@ -299,7 +303,7 @@ $("#submit_button2").click(function(){
     var install_bond = $('#install_bond').val()
     var install_root_size =$('#install_root_size').val()
     var install_bond_opts = $('#install_bond_opts').val()
-    var params ="aa={\"operation_type\":\"install\",\"raid\":{\"media_type\":\""+install_raid_data+"\",\"raid_level\":\""+install_raid_root+"\"},\"sn\":\""+Sn+"\",\"hostname\":\""+Hostname+"\",\"OsVersion\":\""+OsVersion+"\",\"ethernet\":{\"inf0\":{\"Ip\":\""+Ip+"\",\"Netmask\":\""+Netmask
+    var params ="aa={\"operation_type\":\"install\",\"id\":\""+Id+"\",\"raid\":{\"media_type\":\""+install_raid_data+"\",\"raid_level\":\""+install_raid_root+"\"},\"sn\":\""+Sn+"\",\"hostname\":\""+Hostname+"\",\"OsVersion\":\""+OsVersion+"\",\"ethernet\":{\"inf0\":{\"Ip\":\""+Ip+"\",\"Netmask\":\""+Netmask
 +"\",\"GW\":\""+GW+"\",\"Mac\":\""+Mac+"\"},\"ilo_info\":{\"ipaddr\":\""+iLoIp+"\",\"netmask\":\""+iLoNetmask+"\",\"gw\":\""+iLoGW+"\",\"mac_addr\":\""+iLoMac+"\"},\"install_os\":\""+install_os+"\",\"rootsize\":\""+install_root_size+"\"}}";
 
     $.ajax({
