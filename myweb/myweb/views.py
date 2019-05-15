@@ -74,7 +74,7 @@ class Task(ListView):
     task列表
     """
     model = Task
-    template_name = 'books/publish_list.html'
+    template_name = 'task/task_list.html'
     context_object_name = 'task_list'
     paginate_by = 10
 
