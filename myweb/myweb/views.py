@@ -1,12 +1,14 @@
-from django.shortcuts import render
-from django.views.generic import View, ListView
+from django.views.generic import ListView
 from django.http import JsonResponse, QueryDict
 from django.db.models import Q
 from pure_pagination.mixins import PaginationMixin
 from .models import Cmdb, Task
 from .forms import CmdbForm
 import json
-import re
+from scripts.install import install
+from scripts import  Logger
+
+
 
 
 # Create your views here.
@@ -24,7 +26,7 @@ class CmdbView(PaginationMixin,ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(CmdbView, self).get_context_data(**kwargs)
-        print(context["paginator"])
+        #print(context["paginator"])
         return context
 
     def get_queryset(self):
@@ -85,9 +87,8 @@ class Task(ListView):
         return queryset
 
 
-class AOC(object):
-
-    def aoc(request):
+logger = Logger.Logger().getlog()
+def AOC(request):
         if request.method == 'GET':
             # print (request)
             a = {'a': 1}
@@ -95,12 +96,31 @@ class AOC(object):
             # return restful.result(code=restful.Httpcode.paramserror,message="aa")
             return JsonResponse(a)
 
+
         if request.method == "POST":
             # print (request.POST)
             data = QueryDict(request.body).dict()['aa']
+            print (data)
+            # print (data)
+            data = json.loads(data)
+            #print (data)
+            r = data['operation_type']
+            if r == "install":
+                print ("ok")
+                logger.info('接收安装参数，服务器开始安装')
+                result = install(data)
+
+
+                print ("-----------------------------------")
+                print (result)
+                logger.info(result)
+
+            #print(type(data1))
             # d=re.sub("u'","\"",data)
             # d=re.sub("'","\"",d)
             # data1 = json.loads(d,encoding='utf-8')
-
+            # t1 = aos.aos(data1)
+            # print (t1)
             a = {"v": 1}
             return JsonResponse(a)
+
