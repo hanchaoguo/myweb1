@@ -201,22 +201,7 @@ class TaskInfoDetailView(DetailView):
             # raise Http404(_("No %(verbose_name)s found matching the query") %
             #               {'verbose_name': queryset.model._meta.verbose_name})
             obj = {}
-        print("end--------", obj)
         return obj
-
-    def delete(self, **kwargs):
-        pk = kwargs.get('pk')
-        # 通过出版社对象查所在该出版社的书籍，如果有关联书籍不可以删除，没有关联书籍可以删除
-        try:
-            obj = self.model.objects.get(pk=pk)
-            if not obj.book_set.all():
-                self.model.objects.filter(pk=pk).delete()
-                res = {"code": 0, "result": "删除作者成功"}
-            else:
-                res = {"code": 1, "errmsg": "该作者有关联书籍,请联系管理员"}
-        except:
-            res = {"code": 1, "errmsg": "删除错误请联系管理员"}
-        return JsonResponse(res, safe=True)
 
 
 def AOC(request):
