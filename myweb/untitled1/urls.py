@@ -17,12 +17,13 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url
 
-from myweb.views import CmdbView,AOC,Task
+from myweb.views import CmdbView, AOC, Task,TaskInfoDetailView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     url('^$', CmdbView.as_view(), name='cmdb'),
     url('^task/', Task.as_view(), name='task'),
-    url('^aoc/',AOC,name='aoc')
+    url('^aoc/', AOC, name='aoc'),
+    url(r'^taskInfo/(?P<pk>\d+)?/?$', TaskInfoDetailView.as_view(), name='task_info_detail'),
 
 ]

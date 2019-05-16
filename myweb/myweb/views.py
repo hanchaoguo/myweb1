@@ -1,8 +1,9 @@
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from django.http import JsonResponse, QueryDict
 from django.db.models import Q
+from django.http import Http404
 from pure_pagination.mixins import PaginationMixin
-from .models import Cmdb, Task
+from .models import Cmdb, Task, TaskInfo
 from .forms import CmdbForm
 import json
 
@@ -141,6 +142,78 @@ class Task(PaginationMixin, ListView):
         try:
             self.model.objects.filter(id=pk).delete()
             res = {"code": 0, "result": "删除任务成功"}
+        except:
+            res = {"code": 1, "errmsg": "删除错误请联系管理员"}
+        return JsonResponse(res, safe=True)
+
+
+class TaskInfoDetailView(DetailView):
+    '''
+        动作：getone, delete
+    '''
+    model = TaskInfo
+    template_name = "task/task_info_detail.html"
+    context_object_name = 'task_info'
+    next_url = '/task'
+
+    # 修改原码
+    def get_object(self, queryset=None):
+        """
+        Return the object the view is displaying.
+
+        Require `self.queryset` and a `pk` or `slug` argument in the URLconf.
+        Subclasses can override this to return any object.
+        """
+        # Use a custom queryset if provided; this is required for subclasses
+        # like DateDetailView
+        if queryset is None:
+            queryset = self.get_queryset()
+
+        # Next, try looking up by primary key.
+        task_pk = self.kwargs.get(self.pk_url_kwarg)
+        task_obj = Task().model.objects.filter(pk=task_pk)
+        pk = None
+        if len(task_obj) > 0:
+            task_info = task_obj[0].taskinfo_set.all()
+            if len(task_info) > 0:
+                pk = task_info[0].id
+
+        slug = self.kwargs.get(self.slug_url_kwarg)
+        if pk is not None:
+            queryset = queryset.filter(pk=pk)
+
+        # Next, try looking up by slug.
+        if slug is not None and (pk is None or self.query_pk_and_slug):
+            slug_field = self.get_slug_field()
+            queryset = queryset.filter(**{slug_field: slug})
+
+        # If none of those are defined, it's an error.
+        if pk is None and slug is None:
+            # raise AttributeError("Generic detail view %s must be called with "
+            #                      "either an object pk or a slug."
+            #                      % self.__class__.__name__)
+            obj = {}
+
+        try:
+            # Get the single item from the filtered queryset
+            obj = queryset.get()
+        except Exception as e:
+            # raise Http404(_("No %(verbose_name)s found matching the query") %
+            #               {'verbose_name': queryset.model._meta.verbose_name})
+            obj = {}
+        print("end--------", obj)
+        return obj
+
+    def delete(self, **kwargs):
+        pk = kwargs.get('pk')
+        # 通过出版社对象查所在该出版社的书籍，如果有关联书籍不可以删除，没有关联书籍可以删除
+        try:
+            obj = self.model.objects.get(pk=pk)
+            if not obj.book_set.all():
+                self.model.objects.filter(pk=pk).delete()
+                res = {"code": 0, "result": "删除作者成功"}
+            else:
+                res = {"code": 1, "errmsg": "该作者有关联书籍,请联系管理员"}
         except:
             res = {"code": 1, "errmsg": "删除错误请联系管理员"}
         return JsonResponse(res, safe=True)

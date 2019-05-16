@@ -79,7 +79,7 @@
              <td> {{ task.Taksstatus }}</td>
             <td> {{ task.Completiontime }}</td>
             <td>
-			<a type="button" class="btn btn-info btn-xs"  href="#" >查看</a>
+			<a type="button" class="btn btn-info btn-xs"  href= "{% url 'task_info_detail'  task.id %}">查看</a>
 		    </td>
 		    <td>
 			<a type="button" class="btn btn-info btn-xs"  href="#" >重装</a>
